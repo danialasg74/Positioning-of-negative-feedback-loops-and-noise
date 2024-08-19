@@ -1,10 +1,10 @@
-################# R code for plotting four AMP expression across 4 time points upon P. retgerri infection #################
+################# R code for plotting four AMP expressions across 4 time points upon P. retgerri infection #################
 
 #Load packages
 library(ggplot2)
 library(gridExtra)
 
-#Id values for four AMPs mentioned in the manuscirpt
+#Flybase Ids of four AMPs mentioned in the manuscript
 #AttA: FBgn0012042
 #AttB: FBgn0041581
 #DptA: FBgn0004240
@@ -12,7 +12,7 @@ library(gridExtra)
 
 ###########################################################################################################################
 
-#Custom-made function for calculation of avergae expression across replicates of the same biological samples 
+#Custom-made function for calculation of average expression across replicates of the same biological samples 
 calculate_averages <- function(vec, n) {
   result <- c()
   for (i in seq(1, length(vec), by = n)) {
@@ -31,7 +31,7 @@ timepoints = c(0, 12, 36, 132)
 #Order samples based on time points
 TPM_Prettgeriheat = TPM_Prettgeriheat[,c(1,grep("zero", names(TPM_Prettgeriheat)) , grep("twelve", names(TPM_Prettgeriheat)),grep("thirty", names(TPM_Prettgeriheat)),grep("one_three_two", names(TPM_Prettgeriheat)) )]
 
-#Extract TPM for each AMP and calculate avergae expression for each sample across its replicates
+#Extract TPM for each AMP and calculate the average expression for each sample across its replicates
 #AttacinA
 Prettgeriheat_atta = calculate_averages(as.numeric(subset(TPM_Prettgeriheat, TPM_Prettgeriheat$gene_names == "FBgn0012042")[,-1]), n = 3)
 #AttacinB
@@ -48,7 +48,7 @@ Prettgeriheat = data.frame(timepoints = timepoints,
                            dpta = Prettgeriheat_dpta,
                            dptb = Prettgeriheat_dptb)
 
-#Use ggplot2 to plot expression of AttacinA
+#Use ggplot2 to plot the expression of AttacinA
 AttacinA_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = atta, group = 1)) +
   geom_line(linetype = "dashed") +       # Make the line dashed
   geom_point() +
@@ -56,7 +56,7 @@ AttacinA_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = atta, group = 1)) 
   scale_x_continuous(breaks = Prettgeriheat$timepoints) +  # Only show values from timepoints
   labs(x = "Hours post-infection", y = "TPM")+ggtitle("AttacinA")+theme(text = element_text(family = "Times New Roman"))               # Label x and y axes
 
-#Use ggplot2 to plot expression of AttacinB
+#Use ggplot2 to plot the expression of AttacinB
 AttacinB_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = attb, group = 1)) +
   geom_line(linetype = "dashed") +       # Make the line dashed
   geom_point() +
@@ -64,7 +64,7 @@ AttacinB_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = attb, group = 1)) 
   scale_x_continuous(breaks = Prettgeriheat$timepoints) +  # Only show values from timepoints
   labs(x = "Hours post-infection", y = "TPM")+ggtitle("AttacinB")  +theme(text = element_text(family = "Times New Roman"))             # Label x and y axes
 
-#Use ggplot2 to plot expression of DiptericinA
+#Use ggplot2 to plot the expression of DiptericinA
 DiptA_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = dpta, group = 1)) +
   geom_line(linetype = "dashed") +       # Make the line dashed
   geom_point() +
@@ -73,7 +73,7 @@ DiptA_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = dpta, group = 1)) +
   labs(x = "Hours post-infection", y = "TPM")+ggtitle("DiptA")  +theme(text = element_text(family = "Times New Roman")) 
 
 
-#Use ggplot2 to plot expression of DiptericinB
+#Use ggplot2 to plot the expression of DiptericinB
 DiptB_plot = ggplot(Prettgeriheat, aes(x = timepoints, y = dptb, group = 1)) +
   geom_line(linetype = "dashed") +       # Make the line dashed
   geom_point() +
