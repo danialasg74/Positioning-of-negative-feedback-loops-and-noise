@@ -13,11 +13,13 @@ library(gridExtra)
 ###########################################################################################################################
 
 #Custom-made function for calculation of average expression across replicates of the same biological samples 
-calculate_averages <- function(vec, n) {
-  result <- c()
+calculate_averages = function(vec, n) {
+  #Vec: A vector containing TPM values
+  #n: number of replicates 
+  result = c()
   for (i in seq(1, length(vec), by = n)) {
-    avg <- mean(vec[i:(i + n - 1)])
-    result <- c(result, avg)
+    avg = mean(vec[i:(i + n - 1)])
+    result = c(result, avg)
   }
   return(result)
 }
